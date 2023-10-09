@@ -1,7 +1,10 @@
 # gudlift-registration
+**_This is a project done as part of my degree program at Openclassrooms (project 11: Améliorez une application Web Python par des tests et du débogage)._**
+
+**_The objective of the project is to fix bugs in the project [Python_Testing](https://github.com/OpenClassrooms-Student-Center/Python_Testing) and implement the Phase 2 with new functionalities. Each functionality and bug fix is in it's own branch. Also each new implementation respects TDD._**
+
 
 1. Why
-
 
     This is a proof of concept (POC) project to show a light-weight version of our competition booking platform. The aim is the keep things as light as possible, and use feedback from the users to iterate.
 
@@ -31,7 +34,11 @@
 
     - Rather than hunting around for the packages you need, you can install in one step. Type <code>pip install -r requirements.txt</code>. This will install all the packages listed in the respective file. If you install a package, make sure others know by updating the requirements.txt file. An easy way to do this is <code>pip freeze > requirements.txt</code>
 
-    - Flask requires that you set an environmental variable to the python file. However you do that, you'll want to set the file to be <code>server.py</code>. Check [here](https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application) for more details
+    - Flask requires that you set an environmental variable to the python file. However you do that, you'll want to set the file to be <code>server.py</code>. To do that run the following command in your terminal:
+        - On Linux/MacOs: <code>export FLASK_APP=server.py</code>
+        - On Windows, 
+            1. Command Prompt: <code>set FLASK_APP=server.py</code>
+            2. PowerShell: <code>$env:FLASK_APP = "server.py"</code>
 
     - You should now be ready to test the application. In the directory, type either <code>flask run</code> or <code>python -m flask run</code>. The app should respond with an address you should be able to go to using your browser.
 
