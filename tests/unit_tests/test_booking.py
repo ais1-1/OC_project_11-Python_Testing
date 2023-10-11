@@ -21,7 +21,56 @@ class TestBooking:
         server.competitions = self.competition
         server.booking_details = self.booking_details
 
-    
+    def test_purchase_places_with_no_places(self):
+        placesRequired = ""
+        response = self.client.post(
+            "/purchasePlaces",
+            data={
+                "competition": self.competition[0]["name"],
+                "club": self.club[0]["name"],
+                "places": placesRequired,
+            },
+        )
+        error_message = "Please enter a valid number"
+        assert response.status_code == 500
+        assert error_message in response.data.decode()
+
+    def test_purchase_places_with_less_than_twelve_places(self):
+        placesRequired = 4
+        club_name = self.club[0]["name"]
+        competition_name = self.competition[0]["name"]
+        response = self.client.post(
+            "/purchasePlaces",
+            data={
+                "competition": competition_name,
+                "club": club_name,
+                "places": placesRequired,
+            },
+        )
+        error_message = "Great-booking complete!"
+        assert response.status_code == 200
+        assert error_message in response.data.decode()
+
+    def test_purchase_places_with_more_than_twelve_places(self):
+        placesRequired = 13
+        club_name = self.club[0]["name"]
+        competition_name = self.competition[0]["name"]
+        response = self.client.post(
+            "/purchasePlaces",
+            data={
+                "competition": competition_name,
+                "club": club_name,
+                "places": placesRequired,
+            },
+        )
+        error_message = "you cannot book more than 12 places for a competition!"
+        assert response.status_code == 400
+        assert error_message in response.data.decode()
+
+    def test_utilities_create_booking_details(self):
+        self.booking_details = {"Test Festival": {"Test club": 0}}
+        result = utilities.create_booking_details(self.club, self.competition)
+        assert result == self.booking_details
 
     def test_utilities_update_booking_details(self):
         club_name = self.club[0]["name"]
