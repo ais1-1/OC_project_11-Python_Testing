@@ -51,8 +51,14 @@
 
 5. Testing
 
-    You are free to use whatever testing framework you like-the main thing is that you can show what tests you are using.
+    This project use pytest and pytest-flask. These packages are installed in your virtual environment, if you use requirements.txt to install.
 
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
+
+6. Naming convention
+
+    This project follows [PEP8](https://peps.python.org/pep-0008/) for python. It follows the recommendations from [djlint](https://www.djlint.com/docs/getting-started/) for HTML.
+
+
 
