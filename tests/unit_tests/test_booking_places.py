@@ -1,10 +1,10 @@
-""" Unit tests related to booking """
+""" Unit tests for booking of number of places """
 
 import server
 import utilities
 
 
-class TestBooking:
+class TestBookingPlaces:
     def setup_method(self):
         self.client = server.app.test_client()
         self.club = [{"name": "Test club", "email": "test@example.com", "points": "13"}]
@@ -47,9 +47,9 @@ class TestBooking:
                 "places": placesRequired,
             },
         )
-        error_message = "Great-booking complete!"
+        success_message = "Great-booking complete!"
         assert response.status_code == 200
-        assert error_message in response.data.decode()
+        assert success_message in response.data.decode()
 
     def test_purchase_places_with_more_than_twelve_places(self):
         placesRequired = 13
