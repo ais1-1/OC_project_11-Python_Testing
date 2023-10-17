@@ -20,6 +20,17 @@ class TestRoutes:
         server.competitions = self.competition
         server.booking_details = self.booking_details
 
+    def test_base_route(self):
+        url = "/"
+        response = self.client.get(url)
+        assert "Registration Portal" in response.data.decode()
+        assert response.status_code == 200
+
+    def test_logout_redirect(self):
+        response = self.client.get("/logout", follow_redirects=True)
+        assert response.status_code == 200
+        assert "Registration Portal" in response.data.decode()
+
     def test_view_club_points_route(self):
         url = "/viewClubPoints"
         response = self.client.get(url)
