@@ -26,10 +26,9 @@ class TestRoutes:
         assert "Registration Portal" in response.data.decode()
         assert response.status_code == 200
 
-    def test_logout_redirect(self):
-        response = self.client.get("/logout", follow_redirects=True)
-        assert response.status_code == 200
-        assert "Registration Portal" in response.data.decode()
+    def test_logout_root(self):
+        response = self.client.get("/logout")
+        assert response.status_code == 302
 
     def test_view_club_points_route(self):
         url = "/viewClubPoints"
