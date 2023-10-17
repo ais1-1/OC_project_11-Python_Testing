@@ -92,6 +92,7 @@ def purchase_places():
         competition["numberOfPlaces"] = (
             int(competition["numberOfPlaces"]) - places_required
         )
+        club["points"] = int(club["points"]) - places_required
         update_booking_details(
             booking_details, club["name"], competition["name"], places_required
         )
