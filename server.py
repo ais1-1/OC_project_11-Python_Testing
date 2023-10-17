@@ -88,21 +88,33 @@ def purchase_places():
         flash("Please enter a valid number", "error")
         return render_template("booking.html", club=club, competition=competition), 500
 
-    if places_required + booking_details[competition["name"]][club["name"]] <= 12:
+    new_club_points = int(club["points"]) - places_required
+
+    if places_required + booking_details[competition["name"]][club["name"]] <= 12 and (
+        new_club_points >= 0
+    ):
         competition["numberOfPlaces"] = (
             int(competition["numberOfPlaces"]) - places_required
         )
-        club["points"] = int(club["points"]) - places_required
         update_booking_details(
             booking_details, club["name"], competition["name"], places_required
         )
+        club["points"] = new_club_points
         flash("Great-booking complete!", "success")
         return (
             render_template("welcome.html", club=club, competitions=competitions),
             200,
         )
     else:
-        flash("Sorry, you cannot book more than 12 places for a competition!", "error")
+        if new_club_points < 0:
+            flash(
+                "You don't have enough points to do this. Please try with a lesser number.",
+                "error",
+            )
+        else:
+            flash(
+                "Sorry, you cannot book more than 12 places for a competition!", "error"
+            )
         return render_template("booking.html", club=club, competition=competition), 400
 
 
