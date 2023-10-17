@@ -1,11 +1,14 @@
 """ Unit tests related to Authentication """
 
-from server import app, clubs
+import server
 
 
 class TestAuthentication:
     def setup_method(self):
-        self.client = app.test_client()
+        self.client = server.app.test_client()
+        self.club = [{"name": "Test club", "email": "test@example.com", "points": "13"}]
+
+        server.clubs = self.club
 
     def test_registration_with_empty_email(self):
         result = self.client.post("/showSummary", data={"email": ""})
@@ -16,5 +19,5 @@ class TestAuthentication:
         assert result.status_code == 401
 
     def test_registration_with_known_email(self):
-        result = self.client.post("/showSummary", data={"email": clubs[0]["email"]})
+        result = self.client.post("/showSummary", data={"email": self.club[0]["email"]})
         assert result.status_code == 200
