@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+              content="Light-weight version of GUDLFT competition booking platform">
+        <meta name="keywords" content="competition, booking">
+        <title>Points Display Board || GUDLFT</title>
+        <link rel="stylesheet"
+              type="text/css"
+              href="{{ url_for('static',filename='style.css') }}">
+    </head>
+    <body>
+        <h1>Welcome to the GUDLFT Points Display Board!</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Club's name</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for club in clubs %}
+                    <tr>
+                        <td>{{ club['name'] }}</td>
+                        <td>{{ club['points'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include 'message.html' %}
+    </body>
+</html>
