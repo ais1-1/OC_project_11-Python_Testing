@@ -19,7 +19,10 @@ class TestServer:
                 "numberOfPlaces": "10",
             },
         ]
-        self.booking_details = {"Test1 Competition": {"Test club": 7}}
+        self.booking_details = {
+            "Test1 Competition": {"Test club": 7},
+            "Test2 Competition": {"Test club": 0},
+        }
 
         server.clubs = self.club
         server.competitions = self.competition
@@ -50,3 +53,49 @@ class TestServer:
         assert points_board_response.status_code == 200
         assert club_points_after == club_points - places_required
         assert b"<td>9</td>" in points_board_response.data
+
+    def test_successfully_book_places_in_competition(self):
+        """User login"""
+        result = self.client.post("/showSummary", data={"email": self.club[0]["email"]})
+        """ Book places for a competition """
+        places_required = 4
+        club_name = self.club[0]["name"]
+        competition_name = self.competition[1]["name"]
+        response = self.client.post(
+            "/purchasePlaces",
+            data={
+                "competition": competition_name,
+                "club": club_name,
+                "places": places_required,
+            },
+        )
+        success_message = "Great-booking complete!"
+        assert result.status_code == 200
+        assert response.status_code == 200
+        assert success_message in response.data.decode()
+
+    def test_restrict_booking_places_in_past_competition(self):
+        """User login"""
+        result = self.client.post("/showSummary", data={"email": self.club[0]["email"]})
+        """ Book places for a competition """
+        club_name = self.club[0]["name"]
+        competition_name = self.competition[0]["name"]
+        response = self.client.get(f"/book/{competition_name}/{club_name}")
+        error_message = "this competition is over"
+        assert result.status_code == 200
+        assert response.status_code == 400
+        assert error_message in response.data.decode()
+
+    def test_restrict_unauthenticated_access_to_booking_page(self):
+        result = self.client.post("/showSummary", data={"email": ""})
+        response = self.client.get(f"/book/{self.competition}/''")
+        assert result.status_code == 400
+        assert response.status_code == 500
+        assert "Something went wrong" in response.data.decode()
+
+    def test_allow_unauthenticated_access_to_points_display_board(self):
+        result = self.client.post("/showSummary", data={"email": ""})
+        response = self.client.get("/viewClubPoints")
+        assert result.status_code == 400
+        assert response.status_code == 200
+        assert "Points Display Board" in response.data.decode()
