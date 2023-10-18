@@ -51,7 +51,7 @@
 
 5. Testing
 
-    To run all the tests inside the project you need [pytest](https://docs.pytest.org/en/7.4.x/), [pytest-flask](https://pytest-flask.readthedocs.io/en/latest/) and [locust](https://locust.io/). Also to see how well we're testing you need [coverage](https://coverage.readthedocs.io/en/7.3.2/). These packages are installed in your virtual environment if you use requirements.txt to install.
+    To run all the tests inside the project you need [pytest](https://docs.pytest.org/en/7.4.x/), [pytest-flask](https://pytest-flask.readthedocs.io/en/latest/) and [locust](https://locust.io/). Also to see how well we're testing you need [coverage](https://coverage.readthedocs.io/en/7.3.2/) and [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/). These packages are installed in your virtual environment if you use requirements.txt to install.
 
     * Unit tests and integration tests
 
@@ -67,8 +67,9 @@
 
             pytest tests/integration_tests/
         
-        To see the test coverage, use the following command:
+        To see the test coverage, run the following commands:
 
+            pytest --cov=.
             coverage report
 
     * Performance test
